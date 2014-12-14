@@ -1,0 +1,20 @@
+#!/bin/sh
+
+if [ "$(uname)" == 'Darwin' ]; then
+    # Mac
+    if [ $1 -eq 0 ]; then
+        osascript -e 'display notification "🍣\n🍣🍣\n🍣🍣🍣\n🍣🍣🍣🍣" with title "[Success] Test Passed!" subtitle "This is a Hartmann notification."'
+    else
+        osascript -e 'display notification "💣\n💣💣\n💣💣💣\n💣💣💣💣" with title "[Failure] Error Occured..." subtitle "This is a Hartmann notification."'
+    fi
+elif [ -e /etc/lsb-release ]; then
+    # Ubuntu
+    if [ $1 -eq 0 ]; then
+    	notify-send "[Success] Test Passed!" "This is a Hartmann notification.\n\nok!" -i my.png
+    else
+        notify-send "[Failure] Error Occured..." "This is a Hartmann notification.\n\nDon't mind!" -i my.png
+    fi
+else
+    echo "Your platform ($(unama -a)) is not supported."
+	exit 1
+fi

@@ -13,3 +13,11 @@ path = "src/server.rs"
 
 name = "client"
 path = "src/client.rs"
+
+[dependencies]
+
+regex = "0.1.1"
+
+[dependencies.redis]
+
+git = "https://github.com/mitsuhiko/redis-rs.git"

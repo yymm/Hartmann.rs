@@ -5,8 +5,8 @@ use std::io::{TcpListener, TcpStream};
 use std::io::{Acceptor, Listener};
 use std::io::Command;
 
-fn display_notifier(arg: &str) {
-    let output = match Command::new("./src/notifier").arg(arg).output() {
+fn display_notifier() {
+    let output = match Command::new("./src/notifier").arg("0").output() {
         Ok(output) => output,
         Err(e) => panic!("failed to execute process: {}", e),
     };
@@ -27,10 +27,10 @@ fn main() {
     fn handle_client(mut stream: TcpStream) {
         debug!("peer: {}", stream.peer_name());
         debug!("socket: {}", stream.socket_name());
-        let mut buf = [0];
+        let mut buf = [0u8, ..4096];
         let _ = stream.read(&mut buf);
         debug!("read: {}", String::from_utf8_lossy(&buf));
-        display_notifier(String::from_utf8_lossy(&buf).as_slice());
+        display_notifier();
         let _ = stream.write(b"1");
     }
 
