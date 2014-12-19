@@ -3,16 +3,18 @@
 if [ "$(uname)" == 'Darwin' ]; then
     # Mac
     if [ $1 -eq 0 ]; then
-        osascript -e 'display notification "🍣\n🍣🍣\n🍣🍣🍣\n🍣🍣🍣🍣" with title "[Success] Test Passed!" subtitle "This is a Hartmann notification."'
+        #osascript -e 'display notification "ok!" with title "[Success] Test Passed!" subtitle "This is a Hartmann notification."'
+		terminal-notifier -group 'Hartmann' -title 'Success!' -subtitle 'Sir! This is a Hartmann notification' -message '\[Success] Test All Passed!' -contentImage ./src/hartmann.jpg -appIcon ./src/success.jpg
     else
-        osascript -e 'display notification "💣\n💣💣\n💣💣💣\n💣💣💣💣" with title "[Failure] Error Occured..." subtitle "This is a Hartmann notification."'
+        #osascript -e 'display notification "Booo!" with title "[Failure] Error Occured..." subtitle "This is a Hartmann notification."'
+		terminal-notifier -group 'Hartmann' -title 'Failure...' -subtitle 'Sir... This is a Hartmann notification' -message '\[Failure] Error Occured...' -contentImage ./src/hartmann.jpg -appIcon ./src/error.jpg
     fi
 elif [ -e /etc/lsb-release ]; then
     # Ubuntu
     if [ $1 -eq 0 ]; then
-    	notify-send "[Success] Test Passed!" "This is a Hartmann notification.\n\nok!" -i my.png
+    	notify-send "[Success] Test Passed!" "This is a Hartmann notification.\n\nok!" -i ./src/success.jpg
     else
-        notify-send "[Failure] Error Occured..." "This is a Hartmann notification.\n\nDon't mind!" -i my.png
+        notify-send "[Failure] Error Occured..." "This is a Hartmann notification.\n\nDon't mind!" -i ./src/error.jpg
     fi
 else
     echo "Your platform ($(unama -a)) is not supported."

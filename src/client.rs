@@ -43,8 +43,8 @@ fn run_subprocess(cmd: &str, opts: &[String]) -> &'static str {
     };
 
     // TODO: save to redis
-    println!("stdout:\n{}", String::from_utf8_lossy(output.output.as_slice()));
-    println!("stderr:\n{}", String::from_utf8_lossy(output.error.as_slice()));
+    //println!("stdout:\n{}", String::from_utf8_lossy(output.output.as_slice()));
+    //println!("stderr:\n{}", String::from_utf8_lossy(output.error.as_slice()));
 
     if output.status.success() { "0".as_slice() } else { "1".as_slice() }
 }
@@ -60,13 +60,11 @@ fn main() {
     args.remove(0);
     args.remove(0);
     let opts = args.as_slice();
-    println!("{}", cmd);
-    println!("{}", opts);
 
     if is_match_ipv4_and_port(ipv4_and_port.as_slice()) {
         let peer: SocketAddr = convert_socketaddr_from_str(ipv4_and_port.as_slice()); 
         match send_message_via_tcp(peer, run_subprocess(cmd.as_slice(), opts)) {
-            Ok(t) => println!("response: {}", t),
+            Ok(t) => println!("Run Hartmann client :Status => {}", t),
             Err(e) => panic!("Connection error: {}",e), 
         };
     } else {
