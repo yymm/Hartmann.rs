@@ -1,12 +1,20 @@
 #![feature(phase)]
 #[phase(plugin, link)] extern crate log;
 
+use std::os;
 use std::io::{TcpListener, TcpStream};
 use std::io::{Acceptor, Listener};
 use std::io::Command;
 
 fn display_notifier(arg: &str) {
-    let output = match Command::new("./src/notifier").arg(arg).output() {
+    //let output = match Command::new("./src/notifier").arg(arg).output() {
+    os::getenv("(uname)")
+    let output = match Command::new("terminal-notifier").args(&["-group", "'Hartmann'",
+                                                                "-title", "Success!",
+                                                                "-subtitle", "Sir! This is a Hartmann notification",
+                                                                "-message", "'[Success] Test All Passed!'",
+                                                                "-contentImage", "./src/hartmann.jpg",
+                                                                "-appIcon", "./src/hartmann.jpg"]).output() {
         Ok(output) => output,
         Err(e) => panic!("failed to execute process: {}", e),
     };
@@ -17,7 +25,7 @@ fn display_notifier(arg: &str) {
 }
 
 fn main() {
-    let listener = TcpListener::bind("0.0.0.0:8000");
+    let listener = TcpListener::bind("0.0.0.0:8080");
     
     // bind the listener to the specified address
     let mut acceptor = listener.listen();
